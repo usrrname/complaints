@@ -2,7 +2,6 @@ var app = angular.module('twitterApp', ['ngRoute', 'ui.router']);
 
 app.config(function($stateProvider, $httpProvider, $urlRouterProvider){
 	$urlRouterProvider.otherwise('/');
-
 	$stateProvider
 	.state('tweets', {
 		url:'/',
@@ -16,6 +15,11 @@ app.config(function($stateProvider, $httpProvider, $urlRouterProvider){
 					})
 			}
 		}
+		})
+	.state('time', {
+		url:'/',
+		templateUrl:'/partials/time.html',
+		controller: 'timeCtrl as ctrl'
 	})
 	.state('gifs', {
 		url:'/',

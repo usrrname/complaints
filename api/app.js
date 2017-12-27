@@ -11,27 +11,32 @@ var Config = require('./config.js');
 
 var tweets = [];
 var tweetsOnly;
-
+var date = [];
 router.get('/', function(req, res) {
-          res.send(tweets);
+          res.send([tweets, date]);
       });
+
 
 var client = new Twitter(Config.twitter);
 client.get('https://api.twitter.com/1.1/search/tweets.json',
     {
-        'q':'i can\'t believe OR :( OR hate OR ugh -filter:retweets',
+        'q':'%22i%20can\'t%20believe%22 OR :( OR hate OR ugh OR awful -filter:retweets -filter:mentions',
         'lang':'en',
         'result_type': 'recent',
-	 'count': 15 }, 
+        'count': 30,
+        'delimited': 'length',
+    'truncated':'true' }, 
    function (err, data, body) {
     if (err){
         console.log('ERROR [%s]', err);
-    } 
+       } 
     for (var i = 0; i < data.statuses.length; i++){
+        var dateOnly = data.statuses[i].created_at;
+        date.push(String(dateOnly));
         var textOnly = String(data.statuses[i].text);
         tweets.push(textOnly);
             };
-        return tweets;
+        return [tweets, date];
     });
 
 function callback(e){

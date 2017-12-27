@@ -8,7 +8,7 @@ var port = process.env.PORT || 8080;
 var giphy = require('./giphy');
 var Config = require('./config');
 var server = app.listen(port, function(){
-  console.log('magic is happening at port: ' + port);
+  console.log('connected on: ' + port);
 });
 
 app.use(express.static(__dirname + './../public/app'));
@@ -16,6 +16,7 @@ app.use(express.static(__dirname + './../public/app'));
 app.use('/tweets', twap);
 app.use('/images', getty);
 app.use('/gifs', giphy);
+app.use('/loader', twap);
 
 // APP CONFIG
 app.use(bodyParser.json(twap.tweetsOnly));
