@@ -1,12 +1,25 @@
 
 <div class="wrapper">
 	<article>
-		<button id="refresh" role="button grow" ng-click="ctrl.reloadRoute()" value="submit">&#x21bb;</button>
 		<h1 id="head">The latest complaints on Twitter</h1>
+		<button id="refresh" role="button" ng-click="ctrl.reloadRoute()" value="submit">&#x21bb; clear</button>
+		<button ng-click="ctrl.getTweets()">Most recent</button>
+		<button ng-click="ctrl.popularTweets()">Most Popular</button>
 	</article>
 	</div>
 	<div class="wrapper">
-		<div class="styling" ng-style = "{'backgroundImage': 'url({{ctrl.imagesArray[$index]}})'}" ng-repeat="tweet in ctrl.refTweets track by $index">
-			<h1 class="lh-copy" >{{tweet}} </h1>
+		<div class="styling" ng-style = "{'backgroundImage': 'url({{ctrl.imagesArray[$index]}})'}">
+			
+			<h1 class="lh-copy" ng-repeat="tweet in ctrl.refinedTweets track by $index">{{tweet}}
+				<br><sub ng-bind-template="{{ctrl.recentDate[$index]}}!">{{date}}</sub>
+			</h1>
 	</div>
+	<div class="wrapper" ng-show="ctrl.popularTweets">
+		<div class="styling" ng-style="{'backgroundImage': 'url({{ctrl.imagesArray[$index]}})'}">
+	
+			<h1 class="lh-copy" ng-repeat="tweet in ctrl.popularRefinedTweets track by $index">{{tweet}}
+				<br>
+				<sub ng-bind-template="{{ctrl.popDate[$index]}}!">{{date}}</sub>
+			</h1>
+		</div>
 </div>

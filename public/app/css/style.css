@@ -11,7 +11,7 @@ body {
 	font-family: "Playfair Display";
 	font-size: xx-large;
 	font-weight: 700;
-	padding-left:2.5em;
+	padding-left:2.5;
 }
 article {
 padding-left:2em;
@@ -19,9 +19,13 @@ text-align:left;
 }
 
 button {
-font-size:large;
+margin-left:2em;
+padding:0.3em;
+flex-direction: row;
+flex-wrap: wrap;
+font-size:1rem;
 cursor: pointer;
-align-self: flex-end;
+text-align: center;
 }
 
 div{

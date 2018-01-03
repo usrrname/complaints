@@ -35,8 +35,8 @@ client.search().images().withPage(1).withPageSize(10).withPhrase(search)
 });
 
 client.getAccessToken(function (err, response) {
-    if (err) throw err
-    console.log(JSON.stringify(response.access_token));
+    if (err) throw err;
+    console.log(response);
 });
 
 router.get('/', function(req,res){

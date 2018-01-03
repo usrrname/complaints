@@ -16,7 +16,7 @@ app.use(express.static(__dirname + './../public/app'));
 app.use('/tweets', twap);
 app.use('/images', getty);
 app.use('/gifs', giphy);
-app.use('/loader', twap);
+app.use('/pop', twap);
 
 // APP CONFIG
 app.use(bodyParser.json(twap.tweetsOnly));
@@ -25,8 +25,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/tweets', function(req, res) {
-          res.send(twap.tweets);
+          res.send(twap.tweetObj);
       });
+
+app.get('/pop', function (req, res) {
+  res.send(twap.popObj);
+});
 
 app.get('/gifs', function(req, res){
 	res.send(giphy.query);
