@@ -12,6 +12,8 @@ var tweetObj; // returns date and tweet in same obj
 var popObj;
 var recentTweets = [];
 var popularTweetsOnly =[];
+var ISO_8601 = 'YYYY-MM-DDTHH:mm:ss.SSSZ';
+
 
 router.get('/', function(req, res) {
         res.send(tweetObj)
@@ -21,18 +23,20 @@ router.get('/pop', function (req, res) {
     res.send(popObj);
 });
 
+var query = "%22i%20can\'t%20believe%22 OR :( OR hate -filter:mentions";
+
     var client = new Twitter(Config.twitter);
     client.get('https://api.twitter.com/1.1/search/tweets.json',
         {
-            'q': '%22i%20can\'t%20believe%22 OR :( OR hate OR ugh OR awful OR sucks -filter:retweets -filter:mentions',
+            'q': query,
             'lang': 'en',
             'result_type': 'recent',
-            'count': 15,
+            'count': 99,
             'delimited': 'length',
             'truncated': 'true'
         },
         function (err, data, body) {
-            var utc = [];
+            var tweetTimes = [];
             var recentTime = [];
             var recentTweets = []; //store the most recent tweets
             if (err) {
@@ -40,17 +44,20 @@ router.get('/pop', function (req, res) {
             }
             for (var i = 0; i < data.statuses.length; i++) {
                 var index = data.statuses[i].created_at;
-                
-                utc.push(moment.utc(index).format('HH:mm:z'));
+                var normalize = moment(index, 'ddd MMM DD HH:mm:ss +ZZ YYYY', 'en').toString();
+                var z = moment.utc(normalize).format(ISO_8601);
+                tweetTimes.push(z);
                 var timeFromNow = moment(index).fromNow();
-                
                 recentTime.push(timeFromNow);
                 var textOnly = String(data.statuses[i].text);
-                
                 recentTweets.push(textOnly);
             };
             tweetObj = recentTime.map(function (item, i) {
-                return { 'tweet': recentTweets[i], 'time':utc[i], 'timeElapsed': recentTime[i],  };
+                return {
+                    'tweet': recentTweets[i],
+                    'time': tweetTimes[i],
+                    'timeElapsed': recentTime[i],
+                };
             });
             return tweetObj;
         });
@@ -58,15 +65,15 @@ router.get('/pop', function (req, res) {
     var pop = new Twitter(Config.twitter);
     pop.get('https://api.twitter.com/1.1/search/tweets.json',
         {
-            'q': '%22i%20can\'t%20believe%22 OR :( OR hate OR ugh OR awful OR sucks -filter:mentions',
+            'q': query,
             'lang': 'en',
-            'result_type': 'popular',
-            'count': 30,
+            'result_type': 'mixed',
+            'count': 99,
             'delimited': 'length',
             'truncated': 'true'
         },
         function (err, data, body) { 
-            var utc = [];
+            var tweetTimes = [];
             var inLastWeek = [];
             var popularTweetsOnly = [];
             if (err) {
@@ -75,12 +82,18 @@ router.get('/pop', function (req, res) {
             for (var i = 0; i < data.statuses.length; i++) {
                 popularTweetsOnly.push(String(data.statuses[i].text));
                 var index = data.statuses[i].created_at;
-                utc.push(moment.utc(index).format('HH:mm:z'));
+                var normalize = moment(index, 'ddd MMM DD HH:mm:ss +ZZ YYYY', 'en').toString();
+                var z = moment.utc(normalize).format(ISO_8601);
+                tweetTimes.push(z);
                 var timeFromNow = moment(index).fromNow();
                 inLastWeek.push(timeFromNow);
             };
             popObj = inLastWeek.map(function (item, i) {
-                return { 'tweet': popularTweetsOnly[i], 'time': utc[i], 'timeElapsed': inLastWeek[i]};
+                return {
+                    'tweet': popularTweetsOnly[i],
+                    'time': tweetTimes[i],
+                    'timeElapsed': inLastWeek[i]
+                };
             });
             return popObj;
         });
@@ -91,7 +104,8 @@ function callback(e){
 var access_token = Config.twitter.access_token;
 var twitterconsumerKey = Config.twitter.consumer_key;
 var twitterConsumerSecret = Config.twitter.consumer_secret;
-//TWITTER AUTHENICATION
+
+//TWITTER AUTH
 var token = null;
 var oauth2 = new OAuth2(
     twitterconsumerKey,
@@ -104,7 +118,6 @@ oauth2.getOAuthAccessToken(
     '',
     { 'grant_type': 'client_credentials' },
     function (e, access_token, refresh_token, results) {
-        //console.log('bearer: ', access_token);
         oauth2.get('protected url',
             access_token, function (e, data, res) {
                 if (e) return callback(e, null);
