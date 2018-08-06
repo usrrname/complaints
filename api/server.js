@@ -5,7 +5,6 @@ var getty = require('./getty-images');
 var twap = require('./app');
 var bodyParser = require('body-parser');
 var port = process.env.PORT || 8080;
-var giphy = require('./giphy');
 var Config = require('./config');
 var server = app.listen(port, function(){
   console.log('connected on: ' + port);
@@ -15,7 +14,6 @@ app.use(express.static(__dirname + './../public/app'));
 
 app.use('/tweets', twap);
 app.use('/images', getty);
-app.use('/gifs', giphy);
 app.use('/pop', twap);
 
 // APP CONFIG
@@ -30,10 +28,6 @@ app.get('/tweets', function(req, res) {
 
 app.get('/pop', function (req, res) {
   res.send(twap.popObj);
-});
-
-app.get('/gifs', function(req, res){
-	res.send(giphy.query);
 });
 
 module.exports = router;
