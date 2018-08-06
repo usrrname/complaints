@@ -6,7 +6,7 @@
 		<button ng-click="ctrl.getTweets()">Most recent</button>
 		<button ng-click="ctrl.popularTweets()">Most Popular</button>
 	</article>
-	</div>
+</div>
 	<div class="wrapper">
 		<div class="styling" ng-style = "{'backgroundImage': 'url({{ctrl.imagesArray[$index]}})'}">
 			
@@ -17,9 +17,9 @@
 	<div class="wrapper" ng-show="ctrl.popularTweets">
 		<div class="styling" ng-style="{'backgroundImage': 'url({{ctrl.imagesArray[$index]}})'}">
 	
-			<h1 class="lh-copy" ng-repeat="tweet in ctrl.popularRefinedTweets track by $index">{{tweet}}
+			<h1 class="lh-copy" ng-repeat="finalTweet in ctrl.finalTweets track by $index">{{finalTweet}}
 				<br>
-				<sub ng-bind-template="{{ctrl.popDate[$index]}}!">{{date}}</sub>
+				<sub ng-bind-template="{{ctrl.popDate[$index]}}!">{{popDate}}</sub>
 			</h1>
 		</div>
 </div>
