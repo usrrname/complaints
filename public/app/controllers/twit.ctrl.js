@@ -18,7 +18,7 @@ function TwitterCtrl(filterSrv, $http, $state, images, $window) {
   ctrl.popTweets=filterSrv.popTweets;
   ctrl.popDate = filterSrv.popDate;
   ctrl.popObj = filterSrv.popObj;
- ctrl.popularRefinedTweets = filterSrv.popularRefinedTweets;
+ctrl.finalTweets = filterSrv.finalTweets;
 
   //functions
   ctrl.getGif = filterSrv.getGif;
@@ -37,13 +37,12 @@ function TwitterCtrl(filterSrv, $http, $state, images, $window) {
 
   function popularTweets() {
     ctrl.popularTweets = filterSrv.popularTweets();
-    ctrl.popularRefinedTweets = filterSrv.popularRefinedTweets;
     ctrl.popObj = filterSrv.popObj;
     ctrl.popTweets = filterSrv.popTweets;
     ctrl.popDate = filterSrv.popDate;
-   return [ctrl.popTweets, ctrl.popDate];
+    ctrl.finalTweets = filterSrv.finalTweets;
+   return [ctrl.finalTweets, ctrl.popTweets, ctrl.popDate];
   }
-
   ctrl.getImages = filterSrv.getImages;
   ctrl.imagesArray = filterSrv.imagesArray;
 
