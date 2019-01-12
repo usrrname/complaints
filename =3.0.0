@@ -1,0 +1,16 @@
+
+> fsevents@1.1.3 install /Users/jenc/code/complaints/node_modules/fsevents
+> node install
+
+  SOLINK_MODULE(target) Release/.node
+  SOLINK_MODULE(target) Release/.node
+  CXX(target) Release/obj.target/fse/fsevents.o
+  CXX(target) Release/obj.target/fse/fsevents.o
+  SOLINK_MODULE(target) Release/fse.node
+Failed to execute '/Users/jenc/.nvm/versions/node/v11.6.0/bin/node /Users/jenc/.nvm/versions/node/v11.6.0/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js build --fallback-to-build --module=/Users/jenc/code/complaints/node_modules/fsevents/lib/binding/Release/node-v67-darwin-x64/fse.node --module_name=fse --module_path=/Users/jenc/code/complaints/node_modules/fsevents/lib/binding/Release/node-v67-darwin-x64' (1)
+  COPY /Users/jenc/code/complaints/node_modules/fsevents/lib/binding/Release/node-v67-darwin-x64/fse.node
+  TOUCH Release/obj.target/action_after_build.stamp
++ randomatic@3.1.1
+added 4 packages from 16 contributors and audited 688 packages in 9.564s
+found 29 vulnerabilities (11 low, 11 moderate, 7 high)
+  run `npm audit fix` to fix them, or `npm audit` for details
