@@ -17,7 +17,7 @@
     "gettyimages-api": "^2.2.0",
     "giphy-api": "^1.1.16",
     "hoek": "^5.0.3",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "mongodb": "^3.1.13",
     "mongoose": "^5.7.5",
     "oauth": "^0.9.14",
